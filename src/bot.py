@@ -1,5 +1,6 @@
 from .base import LoopMngr, API
 import asyncio
+from datetime import datetime, timezone
 
 class bot:
   server_uri = "https://www.forumorrow.com/"
@@ -8,7 +9,8 @@ class bot:
     self.token = token
     self.loop = LoopMngr(self.server_uri, self._handle_post, None)
     self.api = API(self.loop, self.token, self.username)
-    
+    self.start_time = datetime.now(timezone.utc)
+    print("starttime:", self.start_time)
     if prefix is None:
       self.prefix = f"@{self.username}"
     else:
@@ -39,11 +41,7 @@ class bot:
     if len(args) < 2:
       return None
     
-    if type(self.prefix) is list:
-      if args[0] in self.prefix:
-        await self._call_callbacks('post', post)
-    
-    elif args[0] == self.prefix:
+    elif self.prefix in args:
       print(post)
       await self._call_callbacks('post', args[1:] ,raw=post)
 

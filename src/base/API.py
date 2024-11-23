@@ -22,7 +22,7 @@ class API:
   async def async_init(self):
     self.session = aiohttp.ClientSession(loop=self.loop.asyncio_loop, headers={
       'Api-Key':self._token.strip(), 
-      "Api-Username":self._username.strip()
+      "Api-Username":self._username.strip() 
     })
   
   async def send_post(self, msg, where=None, extra_data=None):
@@ -36,7 +36,6 @@ class API:
       if data['topic_id'] is None:
         del data["topic_id"]
         
-      
       if extra_data is not None:
         data.update(extra_data)
 
@@ -87,6 +86,32 @@ class API:
     
     return await self.send_private(msg, users, data)
 
+  async def upload_image(self, image_path):
+        """
+        上传图片到服务器
+        Args:
+            image_path (str): 图片的本地路径
+        Returns:
+            dict: 上传结果，包括 id 和 url
+        """
+        upload_url = urljoin(self.base_url, "/uploads.json")
+        try:
+            with open(image_path, 'rb') as image_file:
+                # 构建 multipart/form-data 数据
+                data = aiohttp.FormData()
+                data.add_field("type", "composer")
+                data.add_field("synchronous", "true")
+                data.add_field("file", image_file, filename=image_path)
+
+                async with self.session.post(upload_url, data=data) as response:
+                    if response.status == 200:
+                        return await response.json()  # 返回响应中的 JSON 数据
+                    else:
+                        print(f"Image upload failed: {response.status}, {await response.text()}")
+                        return None
+        except Exception as e:
+            print(f"Error uploading image: {e}")
+            return None
 __all__ = [
   'API'
 ]
