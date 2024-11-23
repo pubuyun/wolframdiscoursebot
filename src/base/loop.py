@@ -19,16 +19,18 @@ class LoopMngr:
         self.asyncio_loop = asyncio.get_event_loop()
       
       async with aiohttp.ClientSession() as session:
+        first = True
         while True:
           try:
             async with session.get(get_post_data_uri) as resp:
               data = await resp.json()
+              if first:
+                self.last_gotten_posts = data['latest_posts']
+                first = False
               if not resp.status == 200:
                 print("Error: " + str(resp.status))
                 await asyncio.sleep(10)
                 continue
-
-          
               
               tasks = [
                 asyncio.create_task(self.handle_msg(post))
