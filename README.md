@@ -1,2 +1,1 @@
-# wolframdiscoursebot
- 
+# DiscorseBotLib
