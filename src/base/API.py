@@ -30,7 +30,7 @@ class API:
       data= {
         "raw": msg,
         "topic_id": where,
-        "created_at": str(datetime.now(timezone.utc).strftime("%Y-%m-%d-%H:%M:%S%fZ"))
+        "created_at": str(datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ"))
       }
 
       if data['topic_id'] is None:
