@@ -9,7 +9,7 @@ from .loop import LoopMngr
 from urllib.parse import urljoin
 import json
 
-import datetime
+from datetime import datetime, timezone
 
 class API:
   def __init__(self, loop:LoopMngr, token, username):
@@ -30,7 +30,7 @@ class API:
       data= {
         "raw": msg,
         "topic_id": where,
-        "created_at": str(datetime.datetime.now().strftime("%Y-%m-%d-%H:%M:%S"))
+        "created_at": str(datetime.now(timezone.utc).strftime("%Y-%m-%d-%H:%M:%S%fZ"))
       }
 
       if data['topic_id'] is None:
