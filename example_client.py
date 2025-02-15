@@ -4,6 +4,7 @@ from os import environ as env
 
 
 Bot = bot("discourse_account_name", "discourse_api_name")
+WOLFRAM_APP_ID = "your wolfram app id"
 
 async def reply_to_mentions(args, raw, bot: bot = Bot):
     # 获取帖子内容和作者
@@ -18,7 +19,7 @@ async def reply_to_mentions(args, raw, bot: bot = Bot):
         # 提取 @bot.username 后的内容，去掉多余的空格
         prompt = raw_content[index + len(f"@{bot.username} "):].strip()
         # api 
-        imagepath = wolfram.query_simple_api(prompt)
+        imagepath = wolfram.query_simple_api(prompt, WOLFRAM_APP_ID)
         if imagepath is not None:
             # 回复
             image_path = imagepath  # 替换为你的图片路径
