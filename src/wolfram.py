@@ -1,10 +1,7 @@
 import requests
 from urllib.parse import quote
 
-# 你的 Wolfram Alpha API 密钥
-WOLFRAM_APP_ID = "3APPJ9-LE3T8TXUXJ"
-
-def query_simple_api(query):
+def query_simple_api(query, WOLFRAM_APP_ID):
     """
     调用 Wolfram Alpha Simple API 获取图像结果
     """
