@@ -3,7 +3,7 @@ from src import wolfram
 from os import environ as env
 
 
-Bot = bot("pu6uyun", "071d449ad69b4948da3e4af29602a6cbb39de410ccc47ae533ae759e1ceab1ff")
+Bot = bot("discourse_account_name", "discourse_api_name")
 
 async def reply_to_mentions(args, raw, bot: bot = Bot):
     # 获取帖子内容和作者
